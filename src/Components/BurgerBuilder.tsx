@@ -22,6 +22,21 @@ export const INGREDIENTS: Ingredient[] = [
 const BurgerBuilder: React.FC = () => {
     const [ingredients, setIngredients] = useState<Record<string, number>>({});
 
+
+    const addIngredient = (ingredient: string) => {
+        setIngredients((prev) => ({
+            ...prev,
+            [ingredient]: (prev[ingredient] || 0) + 1,
+        }));
+    };
+
+    const removeIngredient = (ingredient: string) => {
+        setIngredients((prev) => ({
+            ...prev,
+            [ingredient]: (prev[ingredient] || 1) - 1,
+        }));
+    };
+
     const calculateTotalPrice = (): number => {
         let totalPrice = 30;
 
@@ -58,6 +73,8 @@ const BurgerBuilder: React.FC = () => {
                             {ingredient.name}
                             <img src={ingredient.image} alt={ingredient.name}/>
                         </p>
+                        <button className="add-button" onClick={() => addIngredient(ingredient.name)}>Add</button>
+                        <button className="remove-button" onClick={() => removeIngredient(ingredient.name)}>Remove</button>
                     </div>
                 ))}
             </div>
